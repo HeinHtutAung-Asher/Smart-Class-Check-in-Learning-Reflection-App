@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:html' as html;
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseService {
   DatabaseService._internal();
@@ -9,15 +10,21 @@ class DatabaseService {
 
   static const String _storageKey = 'attendance_records';
 
+  Future<SharedPreferences> get _preferences async {
+    return SharedPreferences.getInstance();
+  }
+
   Future<void> saveCheckInRecord(Map<String, dynamic> record) async {
+    final preferences = await _preferences;
     final records = await getAllRecords();
     records.add(record.map((key, value) => MapEntry(key.toString(), value)));
 
-    html.window.localStorage[_storageKey] = jsonEncode(records);
+    await preferences.setString(_storageKey, jsonEncode(records));
   }
 
   Future<List<Map<String, dynamic>>> getAllRecords() async {
-    final raw = html.window.localStorage[_storageKey];
+    final preferences = await _preferences;
+    final raw = preferences.getString(_storageKey);
     if (raw == null || raw.isEmpty) {
       return <Map<String, dynamic>>[];
     }
@@ -30,12 +37,14 @@ class DatabaseService {
 
       return decoded
           .whereType<Map>()
-          .map(
-            (item) => item.map((key, value) => MapEntry(key.toString(), value)),
-          )
+          .map((item) => _normalizeRecord(item))
           .toList();
     } catch (_) {
       return <Map<String, dynamic>>[];
     }
+  }
+
+  Map<String, dynamic> _normalizeRecord(Map<dynamic, dynamic> item) {
+    return item.map((key, value) => MapEntry(key.toString(), value));
   }
 }

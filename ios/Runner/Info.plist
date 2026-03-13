@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Smart Class Check-in needs camera access to scan classroom QR codes.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Smart Class Check-in needs your location to verify classroom attendance.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

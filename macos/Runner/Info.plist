@@ -22,6 +22,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Smart Class Check-in needs camera access to scan classroom QR codes.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Smart Class Check-in needs your location to verify classroom attendance.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>$(PRODUCT_COPYRIGHT)</string>
 	<key>NSMainNibFile</key>
